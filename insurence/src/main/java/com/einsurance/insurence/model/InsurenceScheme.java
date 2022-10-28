@@ -22,5 +22,5 @@ public class InsurenceScheme {
 	private double commissionForInstallmentPayment;
 	private String note;
 	private String Status;
-	private int rk;
+	private int rk5;
 }
