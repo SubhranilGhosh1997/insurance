@@ -6,24 +6,24 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.einsurance.insurence.exceptions.InsurenceSchemealredyExistException;
+import com.einsurance.insurence.exceptions.InsuranceSchemealredyExistException;
 import com.einsurance.insurence.exceptions.SchemeNotPresentException;
 import com.einsurance.insurence.model.InsurenceScheme;
-import com.einsurance.insurence.repo.InsurenceSchemeRepository;
+import com.einsurance.insurence.repo.InsuranceSchemeRepository;
 
 @Service
-public class InsurenceSchemeServiceImpl implements InsurenceSchemeService {
+public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 
 	@Autowired
-	InsurenceSchemeRepository insurenceSchemeRepository;
+	InsuranceSchemeRepository insurenceSchemeRepository;
 
 	@Override
-	public InsurenceScheme addInsuranceScheme(InsurenceScheme insurenceScheme) throws InsurenceSchemealredyExistException {
+	public InsurenceScheme addInsuranceScheme(InsurenceScheme insurenceScheme) throws InsuranceSchemealredyExistException {
 		List<InsurenceScheme> listOfInsuranceSchemes = getAllInsuranceScheme();
 		Optional<InsurenceScheme> schemes = listOfInsuranceSchemes.stream().filter(e -> e.getInsuranceScheme().equals(insurenceScheme.getInsuranceScheme()))
 				.findFirst();
 		if (schemes.isPresent()) {
-			throw new InsurenceSchemealredyExistException();
+			throw new InsuranceSchemealredyExistException();
 		}
 		return insurenceSchemeRepository.save(insurenceScheme);
 	}
