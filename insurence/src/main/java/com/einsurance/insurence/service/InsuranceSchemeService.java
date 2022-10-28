@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.einsurance.insurence.exceptions.InsuranceSchemealredyExistException;
 import com.einsurance.insurence.exceptions.SchemeNotPresentException;
-import com.einsurance.insurence.model.InsurenceScheme;
+import com.einsurance.insurence.model.InsuranceScheme;
 
 public interface InsuranceSchemeService {
-	InsurenceScheme addInsuranceScheme(InsurenceScheme insurenceScheme) throws InsuranceSchemealredyExistException;
-	List<InsurenceScheme> getAllInsuranceScheme();
-	InsurenceScheme getInsuranceSchemeById(long insurenceSchemeId) throws SchemeNotPresentException;
-	InsurenceScheme updateStatusOfInsuranceSchemeById(String status,long insurenceSchemeId) throws SchemeNotPresentException;
+	InsuranceScheme addInsuranceScheme(InsuranceScheme insurenceScheme) throws InsuranceSchemealredyExistException;
+	List<InsuranceScheme> getAllInsuranceScheme();
+	InsuranceScheme getInsuranceSchemeById(long insurenceSchemeId) throws SchemeNotPresentException;
+	InsuranceScheme updateStatusOfInsuranceSchemeById(String status,long insurenceSchemeId) throws SchemeNotPresentException;
 }

@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class InsurenceScheme {
+public class InsuranceScheme {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long insuranceSchemeId;
