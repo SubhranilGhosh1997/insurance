@@ -47,6 +47,6 @@ public class InsurancePlan {
 	@NotBlank	
 	private double profitRatio;
 	
-	private String status;
+	private String status; 
 
 }
