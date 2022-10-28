@@ -14,6 +14,7 @@ public class InsurenceScheme {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long insuranceSchemeId;
+	@NotBlank
 	private long insuranceTypeId;
 	@NotBlank
 	private String insuranceScheme;
@@ -21,6 +22,6 @@ public class InsurenceScheme {
 	private double commissionForNewRegistration;
 	private double commissionForInstallmentPayment;
 	private String note;
+	@NotBlank
 	private String Status;
-	
 }
