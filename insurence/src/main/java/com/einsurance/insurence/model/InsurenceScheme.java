@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
@@ -14,6 +15,7 @@ public class InsurenceScheme {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long insuranceSchemeId;
 	private long insuranceTypeId;
+	@NotBlank
 	private String insuranceScheme;
 	private String image;
 	private double commissionForNewRegistration;
