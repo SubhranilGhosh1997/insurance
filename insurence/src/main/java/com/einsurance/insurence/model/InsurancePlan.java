@@ -21,6 +21,8 @@ public class InsurancePlan {
 	private long InsuranceSchemeId;
 	
 	@NotBlank
+	private String InsurancePlan;
+	@NotBlank
 	@Pattern(regexp = "^[0-9]*", message = "only numbers allowed")
 	private int minumumPolicyTerm;
 	

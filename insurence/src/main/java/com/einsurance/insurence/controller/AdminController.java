@@ -19,15 +19,18 @@ import com.einsurance.insurence.exceptions.CityAlreadyExistException;
 import com.einsurance.insurence.exceptions.CityNotPresentException;
 import com.einsurance.insurence.exceptions.EmployeeNotFoundException;
 import com.einsurance.insurence.exceptions.InsuranceAlreadyExistsException;
+import com.einsurance.insurence.exceptions.InsurancePlanalredyExistException;
 import com.einsurance.insurence.exceptions.StateAlreadyExistException;
 import com.einsurance.insurence.exceptions.StateNotPresentException;
 import com.einsurance.insurence.model.City;
 import com.einsurance.insurence.model.Employee;
+import com.einsurance.insurence.model.InsurancePlan;
 import com.einsurance.insurence.model.InsuranceSettings;
 import com.einsurance.insurence.model.InsuranceType;
 import com.einsurance.insurence.model.State;
 import com.einsurance.insurence.service.CityService;
 import com.einsurance.insurence.service.EmployeeService;
+import com.einsurance.insurence.service.InsurancePlanService;
 import com.einsurance.insurence.service.InsuranceSettingsService;
 import com.einsurance.insurence.service.InsuranceTypeService;
 import com.einsurance.insurence.service.StateService;
@@ -51,6 +54,9 @@ public class AdminController {
 	
 	@Autowired
 	InsuranceTypeService insurenceTypeService;
+
+	@Autowired
+	InsurancePlanService insurencePlanService;
 
 	@PostMapping("/createemployee")
 	public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
@@ -191,5 +197,31 @@ public class AdminController {
 //			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
 //		}
 //	}
-
+	
+	@PostMapping("/addInsurancePlan")
+	public ResponseEntity<?> addInsurancePlan(@RequestBody InsurancePlan insurancePlan) {
+		insurancePlan.setInsurancePlanId(0);
+		try {
+			return new ResponseEntity<InsurancePlan>(insurencePlanService.addInsurancePlan(insurancePlan),
+					HttpStatus.CREATED);
+		} catch (InsurancePlanalredyExistException e) {
+			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getInsurencePlanList")
+	public ResponseEntity<?> getAllInsurancePlans(@RequestBody InsurancePlan insurancePlan) {
+			return new ResponseEntity<List<InsurancePlan>>(insurencePlanService.getAllInsurancePlan(),
+					HttpStatus.OK);
+		
+	}
+	@PutMapping("/updateInsurancePlan")
+	public ResponseEntity<?> updateInsurancePlan(@RequestBody InsurancePlan insurancePlan) {
+		try {
+			return new ResponseEntity<InsurancePlan>(insurencePlanService.addInsurancePlan(insurancePlan),
+					HttpStatus.CREATED);
+		} catch (InsurancePlanalredyExistException e) {
+			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+		}
+	}
 }
