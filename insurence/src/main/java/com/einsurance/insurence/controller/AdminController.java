@@ -180,7 +180,7 @@ public class AdminController {
 		}
 	}
 	@GetMapping("/getInsurenceTypeList")
-	public ResponseEntity<?> getAllInsuranceTypes(@RequestBody InsuranceType insuranceType) {
+	public ResponseEntity<?> getAllInsuranceTypes() {
 			return new ResponseEntity<List<InsuranceType>>(insuranceTypeService.getAllInsuranceTypes(),
 					HttpStatus.OK);
 		
@@ -199,8 +199,12 @@ public class AdminController {
 	public ResponseEntity<?> addInsurancecheme(@RequestBody InsuranceScheme insuranceSchme) {
 		insuranceSchme.setInsuranceSchemeId(0);
 		try {
-			return new ResponseEntity<InsuranceScheme>(insuranceSchemeService.addInsuranceScheme(insuranceSchme),
-					HttpStatus.CREATED);
+			try {
+				return new ResponseEntity<InsuranceScheme>(insuranceSchemeService.addInsuranceScheme(insuranceSchme),
+						HttpStatus.CREATED);
+			} catch (InsuranceTypeNotPresentException e) {
+				return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+			}
 		} catch (InsuranceSchemealredyExistException e) {
 			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
 		}

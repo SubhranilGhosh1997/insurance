@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.einsurance.insurence.exceptions.InsuranceSchemealredyExistException;
+import com.einsurance.insurence.exceptions.InsuranceTypeNotPresentException;
 import com.einsurance.insurence.exceptions.SchemeNotPresentException;
 import com.einsurance.insurence.model.InsuranceScheme;
+import com.einsurance.insurence.model.InsuranceType;
 import com.einsurance.insurence.repo.InsuranceSchemeRepository;
 
 @Service
@@ -17,8 +19,15 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	@Autowired
 	InsuranceSchemeRepository insuranceSchemeRepository;
 
+	@Autowired
+	InsuranceTypeService insuranceTypeService;
 	@Override
-	public InsuranceScheme addInsuranceScheme(InsuranceScheme insuranceScheme) throws InsuranceSchemealredyExistException {
+	public InsuranceScheme addInsuranceScheme(InsuranceScheme insuranceScheme) throws InsuranceSchemealredyExistException, InsuranceTypeNotPresentException {
+		List<InsuranceType> allInsuranceTypes = insuranceTypeService.getAllInsuranceTypes();
+		Optional<InsuranceType> insuranceType = allInsuranceTypes.stream().filter(e -> e.getInsuranceTypeId() == insuranceScheme.getInsuranceSchemeId()).findFirst();
+		if(!insuranceType.isPresent()) {
+			throw new InsuranceTypeNotPresentException();
+		}
 		List<InsuranceScheme> listOfInsuranceSchemes = getAllInsuranceScheme();
 		Optional<InsuranceScheme> schemes = listOfInsuranceSchemes.stream().filter(e -> e.getInsuranceScheme().equals(insuranceScheme.getInsuranceScheme())&& e.getInsuranceTypeId() == insuranceScheme.getInsuranceTypeId())
 				.findFirst();
