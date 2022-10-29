@@ -221,7 +221,7 @@ public class AdminController {
 					HttpStatus.OK);
 		
 	}
-	@PutMapping("/updateInsurancePlan")
+	@PutMapping("/updateInsuranceScheme")
 	public ResponseEntity<?> updateInsuranceScheme(@RequestBody InsuranceScheme insuranceSchme) {
 		try {
 			return new ResponseEntity<InsuranceScheme>(insuranceSchemeService.updateInsuranceScheme(insuranceSchme),

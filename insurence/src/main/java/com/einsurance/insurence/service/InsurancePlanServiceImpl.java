@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.einsurance.insurence.exceptions.InsurancePlanalredyExistException;
 import com.einsurance.insurence.exceptions.PlanNotPresentException;
@@ -12,6 +13,7 @@ import com.einsurance.insurence.model.InsurancePlan;
 import com.einsurance.insurence.model.InsuranceScheme;
 import com.einsurance.insurence.repo.InsurancePlanRepository;
 
+@Service
 public class InsurancePlanServiceImpl implements InsurancePlanService {
 
 	@Autowired
