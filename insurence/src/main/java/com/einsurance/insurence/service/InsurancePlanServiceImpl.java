@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.einsurance.insurence.exceptions.InsurancePlanalredyExistException;
-import com.einsurance.insurence.exceptions.InsuranceSchemealredyExistException;
 import com.einsurance.insurence.exceptions.PlanNotPresentException;
 import com.einsurance.insurence.exceptions.SchemeNotPresentException;
 import com.einsurance.insurence.model.InsurancePlan;
@@ -44,14 +43,14 @@ public class InsurancePlanServiceImpl implements InsurancePlanService {
 		}
 			return plan.get();
 	}
-
 	@Override
-	public InsurancePlan updateStatusOfInsurancePlanById(String status, long insurancePlanId)
-			throws PlanNotPresentException {
-		InsurancePlan plan = getInsurancePlanById(insurancePlanId);
-		plan.setStatus(status);
-		InsurancePlan savePlan = insurancePlanRepository.save(plan);
-		return savePlan;
+	public InsurancePlan updateInsurancePlan(InsurancePlan insurancePlan) throws PlanNotPresentException {
+		InsurancePlan plan = getInsurancePlanById(insurancePlan.getInsurancePlanId());
+		if(plan==null)
+			throw new PlanNotPresentException();
+		InsurancePlan saveInsurancePlan = insurancePlanRepository.save(insurancePlan);
+		return saveInsurancePlan;
 	}
+
 
 }

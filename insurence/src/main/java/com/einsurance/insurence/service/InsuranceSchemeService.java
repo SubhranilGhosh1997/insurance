@@ -7,8 +7,8 @@ import com.einsurance.insurence.exceptions.SchemeNotPresentException;
 import com.einsurance.insurence.model.InsuranceScheme;
 
 public interface InsuranceSchemeService {
-	InsuranceScheme addInsuranceScheme(InsuranceScheme insurenceScheme) throws InsuranceSchemealredyExistException;
+	InsuranceScheme addInsuranceScheme(InsuranceScheme insuranceScheme) throws InsuranceSchemealredyExistException;
 	List<InsuranceScheme> getAllInsuranceScheme();
-	InsuranceScheme getInsuranceSchemeById(long insurenceSchemeId) throws SchemeNotPresentException;
-	InsuranceScheme updateStatusOfInsuranceSchemeById(String status,long insurenceSchemeId) throws SchemeNotPresentException;
+	InsuranceScheme getInsuranceSchemeById(long insuranceScheme) throws SchemeNotPresentException;
+	InsuranceScheme updateInsuranceScheme(InsuranceScheme insuranceScheme) throws SchemeNotPresentException;
 }

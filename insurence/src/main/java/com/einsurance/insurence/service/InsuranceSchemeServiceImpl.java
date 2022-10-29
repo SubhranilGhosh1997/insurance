@@ -15,28 +15,28 @@ import com.einsurance.insurence.repo.InsuranceSchemeRepository;
 public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 
 	@Autowired
-	InsuranceSchemeRepository insurenceSchemeRepository;
+	InsuranceSchemeRepository insuranceSchemeRepository;
 
 	@Override
-	public InsuranceScheme addInsuranceScheme(InsuranceScheme insurenceScheme) throws InsuranceSchemealredyExistException {
+	public InsuranceScheme addInsuranceScheme(InsuranceScheme insuranceScheme) throws InsuranceSchemealredyExistException {
 		List<InsuranceScheme> listOfInsuranceSchemes = getAllInsuranceScheme();
-		Optional<InsuranceScheme> schemes = listOfInsuranceSchemes.stream().filter(e -> e.getInsuranceScheme().equals(insurenceScheme.getInsuranceScheme())&& e.getInsuranceTypeId() == insurenceScheme.getInsuranceTypeId())
+		Optional<InsuranceScheme> schemes = listOfInsuranceSchemes.stream().filter(e -> e.getInsuranceScheme().equals(insuranceScheme.getInsuranceScheme())&& e.getInsuranceTypeId() == insuranceScheme.getInsuranceTypeId())
 				.findFirst();
 		if (schemes.isPresent()) {
 			throw new InsuranceSchemealredyExistException();
 		}
-		return insurenceSchemeRepository.save(insurenceScheme);
+		return insuranceSchemeRepository.save(insuranceScheme);
 	}
 
 	@Override
 	public List<InsuranceScheme> getAllInsuranceScheme() {
-		List<InsuranceScheme> listOfSchemes = insurenceSchemeRepository.findAll();
+		List<InsuranceScheme> listOfSchemes = insuranceSchemeRepository.findAll();
 		return listOfSchemes;
 	}
 
 	@Override
-	public InsuranceScheme getInsuranceSchemeById(long insurenceSchemeId) throws SchemeNotPresentException {
-		Optional<InsuranceScheme> scheme = insurenceSchemeRepository.findById(insurenceSchemeId);
+	public InsuranceScheme getInsuranceSchemeById(long insuranceSchemeId) throws SchemeNotPresentException {
+		Optional<InsuranceScheme> scheme = insuranceSchemeRepository.findById(insuranceSchemeId);
 		if (!scheme.isPresent()) {
 			throw new SchemeNotPresentException();
 		}
@@ -44,10 +44,12 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	}
 
 	@Override
-	public InsuranceScheme updateStatusOfInsuranceSchemeById(String status, long insurenceSchemeId) throws SchemeNotPresentException {
-		InsuranceScheme scheme = getInsuranceSchemeById(insurenceSchemeId);
-		scheme.setStatus(status);
-		InsuranceScheme saveScheme = insurenceSchemeRepository.save(scheme);
+	public InsuranceScheme updateInsuranceScheme(InsuranceScheme insuranceScheme) throws SchemeNotPresentException {
+		InsuranceScheme scheme = getInsuranceSchemeById(insuranceScheme.getInsuranceSchemeId());
+		if (scheme ==null) {
+			throw new SchemeNotPresentException();
+		}
+		InsuranceScheme saveScheme = insuranceSchemeRepository.save(insuranceScheme);
 		return saveScheme;
 	}
 

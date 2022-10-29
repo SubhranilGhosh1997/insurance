@@ -10,5 +10,5 @@ public interface InsurancePlanService {
 	InsurancePlan addInsurancePlan(InsurancePlan insurencePlan) throws InsurancePlanalredyExistException;
 	List<InsurancePlan> getAllInsurancePlan();
 	InsurancePlan getInsurancePlanById(long insurancePlanId) throws PlanNotPresentException;
-	InsurancePlan updateStatusOfInsurancePlanById(String status,long insurancePlanId) throws PlanNotPresentException;
+	InsurancePlan updateInsurancePlan(InsurancePlan insurancePlan)throws PlanNotPresentException;
 }
