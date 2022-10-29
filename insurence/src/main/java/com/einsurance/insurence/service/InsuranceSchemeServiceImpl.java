@@ -24,7 +24,7 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	@Override
 	public InsuranceScheme addInsuranceScheme(InsuranceScheme insuranceScheme) throws InsuranceSchemealredyExistException, InsuranceTypeNotPresentException {
 		List<InsuranceType> allInsuranceTypes = insuranceTypeService.getAllInsuranceTypes();
-		Optional<InsuranceType> insuranceType = allInsuranceTypes.stream().filter(e -> e.getInsuranceTypeId() == insuranceScheme.getInsuranceSchemeId()).findFirst();
+		Optional<InsuranceType> insuranceType = allInsuranceTypes.stream().filter(e -> e.getInsuranceTypeId() == insuranceScheme.getInsuranceTypeId()).findFirst();
 		if(!insuranceType.isPresent()) {
 			throw new InsuranceTypeNotPresentException();
 		}
