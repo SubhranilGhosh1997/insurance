@@ -194,15 +194,6 @@ public class AdminController {
 			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
 		}
 	}
-//	@DeleteMapping("/removeInsuranceType/{insuranceTypeId}")
-//	public ResponseEntity<?> removeInsuranceType(@PathVariable long insuranceTypeId) {
-//		try {
-//			insurenceTypeService.deleteInsuranceType(cityId);
-//			return new ResponseEntity<>(HttpStatus.OK);
-//		} catch (CityNotPresentException e) {
-//			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
-//		}
-//	}
 	
 	@PostMapping("/addInsuranceScheme")
 	public ResponseEntity<?> addInsurancecheme(@RequestBody InsuranceScheme insuranceSchme) {
