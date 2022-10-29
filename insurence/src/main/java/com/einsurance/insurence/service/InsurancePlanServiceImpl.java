@@ -19,8 +19,16 @@ public class InsurancePlanServiceImpl implements InsurancePlanService {
 	@Autowired
 	InsurancePlanRepository insurancePlanRepository;
 	
+	@Autowired
+	InsuranceSchemeService insuranceSchemeService;
+	
 	@Override
-	public InsurancePlan addInsurancePlan(InsurancePlan insurancePlan) throws InsurancePlanalredyExistException {
+	public InsurancePlan addInsurancePlan(InsurancePlan insurancePlan) throws InsurancePlanalredyExistException, SchemeNotPresentException {
+		List<InsuranceScheme> insuranceSchemes = insuranceSchemeService.getAllInsuranceScheme();
+		Optional<InsuranceScheme> insuranceScheme = insuranceSchemes.stream().filter(e -> e.getInsuranceSchemeId() == insurancePlan.getInsuranceSchemeId()).findFirst();
+		if(!insuranceScheme.isPresent()) {
+			throw new SchemeNotPresentException();
+		}
 		List<InsurancePlan> listOfInsurancePlans = getAllInsurancePlan();
 		Optional<InsurancePlan> plans = listOfInsurancePlans.stream()
 				.filter(e -> e.getInsurancePlan().equals(insurancePlan.getInsurancePlan()) && e.getInsuranceSchemeId() == insurancePlan.getInsuranceSchemeId())

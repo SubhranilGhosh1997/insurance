@@ -230,8 +230,11 @@ public class AdminController {
 	public ResponseEntity<?> addInsurancePlan(@RequestBody InsurancePlan insurancePlan) {
 		insurancePlan.setInsurancePlanId(0);
 		try {
-			return new ResponseEntity<InsurancePlan>(insurancePlanService.addInsurancePlan(insurancePlan),
-					HttpStatus.CREATED);
+			try {
+				return new ResponseEntity<InsurancePlan>(insurancePlanService.addInsurancePlan(insurancePlan),
+						HttpStatus.CREATED);
+			} catch (SchemeNotPresentException e) {
+				return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);}
 		} catch (InsurancePlanalredyExistException e) {
 			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
 		}

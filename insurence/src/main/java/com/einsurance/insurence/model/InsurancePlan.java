@@ -17,36 +17,24 @@ public class InsurancePlan {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long insurancePlanId;
 	
-	@NotBlank
-	private long InsuranceSchemeId;
+	private long insuranceSchemeId;
 	
 	@NotBlank
-	private String InsurancePlan;
-	@NotBlank
-	@Pattern(regexp = "^[0-9]*", message = "only numbers allowed")
+	private String insurancePlan;
+
 	private int minumumPolicyTerm;
 	
-	@NotBlank
-	@Pattern(regexp = "^[0-9]*", message = "only numbers allowed")
 	private int maximumPolicyTerm;
 	
-	@NotBlank
-	@Pattern(regexp = "^[0-9]*", message = "only numbers allowed")
 	private int minimumAge;
 	
-	@NotBlank
-	@Pattern(regexp = "^[0-9]*", message = "only numbers allowed")
 	private int maximumAge;
 	
-	@NotBlank
-	@Pattern(regexp = "^[0-9]*", message = "only numbers allowed")
 	private double minimumInvestmentAmount;
 	
-	@NotBlank
-	@Pattern(regexp = "^[0-9]*", message = "only numbers allowed")
+	
 	private double maximumInvestmentAmount;
 	
-	@NotBlank	
 	private double profitRatio;
 	
 	private String status; 
