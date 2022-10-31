@@ -8,9 +8,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class InsurancePlan {
 
 	@Id

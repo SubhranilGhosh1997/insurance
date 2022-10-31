@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.einsurance.insurence.exceptions.UserNotValidException;
 import com.einsurance.insurence.model.Customer;
+import com.einsurance.insurence.model.Employee;
 
 
 
@@ -13,4 +14,5 @@ public interface CustomerService {
 	List<Customer> getCustomer();
 
 	Customer login(String emailId, String password) throws UserNotValidException;
+
 }

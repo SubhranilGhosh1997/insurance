@@ -11,9 +11,11 @@ import javax.validation.constraints.NotEmpty;
 import com.sun.istack.NotNull;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Employee {
 	
 	@Id

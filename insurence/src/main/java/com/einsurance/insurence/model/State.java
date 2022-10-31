@@ -8,9 +8,11 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class State {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

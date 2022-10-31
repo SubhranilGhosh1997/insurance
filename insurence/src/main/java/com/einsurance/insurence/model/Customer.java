@@ -13,9 +13,11 @@ import javax.validation.constraints.Size;
 import com.sun.istack.NotNull;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Customer {
 
 	@Id
