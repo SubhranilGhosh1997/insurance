@@ -6,19 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.einsurance.insurence.exceptions.FeedbackNotFoundException;
 import com.einsurance.insurence.model.Agent;
 import com.einsurance.insurence.model.Customer;
 import com.einsurance.insurence.model.Employee;
+import com.einsurance.insurence.model.Feedback;
 import com.einsurance.insurence.service.AgentService;
 import com.einsurance.insurence.service.CityService;
 import com.einsurance.insurence.service.CustomerService;
 import com.einsurance.insurence.service.EmployeeService;
+import com.einsurance.insurence.service.FeedbackService;
 import com.einsurance.insurence.service.InsurancePlanService;
 import com.einsurance.insurence.service.InsuranceSchemeService;
 import com.einsurance.insurence.service.InsuranceSettingsService;
@@ -43,6 +47,9 @@ public class EmployeeController {
 	@Autowired
 	StateService stateService;
 
+	@Autowired
+	FeedbackService feedbackService;
+	
 	@Autowired
 	InsuranceSettingsService insuranceSettingsService;
 
@@ -81,4 +88,11 @@ public class EmployeeController {
 		return new ResponseEntity<Agent>(agentService.addAgent(agent), HttpStatus.CREATED);
 	}
 
+	@PostMapping("/giveFeedBack/{feedbackId}/{reply}")
+	public ResponseEntity<?> giveFeedBackById(@PathVariable ("feedbackId") long feedbackId,@PathVariable ("reply") String reply){
+		try {
+			return new ResponseEntity<Feedback>(feedbackService.giveFeedBackById(feedbackId, reply), HttpStatus.OK);
+		} catch (FeedbackNotFoundException e) {
+			return new ResponseEntity<Exception>(e,HttpStatus.BAD_REQUEST);		}
+	}
 }
