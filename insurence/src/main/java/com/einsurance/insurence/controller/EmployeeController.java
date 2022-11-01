@@ -66,7 +66,7 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/addAgent")
-	public ResponseEntity<?> addAgent(@RequestBody Agent agent) {
+	public ResponseEntity<?> addAgent(@RequestBody Agent agent ) {
 		agent.setAgentId(0);
 		return new ResponseEntity<Agent>(agentService.addAgent(agent), HttpStatus.CREATED);
 	}
