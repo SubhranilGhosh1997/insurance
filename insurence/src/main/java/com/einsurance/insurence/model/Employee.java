@@ -37,5 +37,5 @@ public class Employee {
 	private String status;
 	@NotNull
 	@NotEmpty
-	private String employeeRole;
+	private String role;
 }

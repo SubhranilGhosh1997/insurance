@@ -3,6 +3,7 @@ package com.einsurance.insurence.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.einsurance.insurence.exceptions.CityAlreadyExistException;
 import com.einsurance.insurence.exceptions.CityNotPresentException;
@@ -44,6 +47,8 @@ import com.einsurance.insurence.service.StateService;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
+	@Value("${project.image}")
+	private String path;
 	@Autowired
 	EmployeeService employeeService;
 
@@ -171,13 +176,22 @@ public class AdminController {
 	}
 
 	@PostMapping("/addInsuranceType")
-	public ResponseEntity<?> addInsuranceType(@RequestBody InsuranceType insuranceType) {
+	public ResponseEntity<?> addInsuranceType(@RequestBody  InsuranceType insuranceType) {
 		insuranceType.setInsuranceTypeId(0);
 		try {
 			return new ResponseEntity<InsuranceType>(insuranceTypeService.addInsuranceType(insuranceType),
 					HttpStatus.CREATED);
 		} catch (InsuranceAlreadyExistsException e) {
 			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	@PutMapping("/addInsuranceType/{insuranceTypeId}")
+	public ResponseEntity<?> addInsuranceTypeImage(@RequestParam MultipartFile file, @PathVariable long insuranceTypeId ) {
+		try {
+			return new ResponseEntity<String>(insuranceTypeService.addInsuranceTypeImage(insuranceTypeId, file, path),
+			HttpStatus.CREATED);
+		} catch (InsuranceTypeNotPresentException e) {
+			return new ResponseEntity<Exception>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 	@GetMapping("/getInsurenceTypeList")
