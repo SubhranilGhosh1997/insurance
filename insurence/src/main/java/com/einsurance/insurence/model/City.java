@@ -25,4 +25,6 @@ public class City {
 	private String city;
 	@NotBlank
 	private String status;
+	
+	private String state;
 }

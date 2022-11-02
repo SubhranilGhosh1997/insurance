@@ -2,6 +2,7 @@ package com.einsurance.insurence.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 		if(!insuranceType.isPresent()) {
 			throw new InsuranceTypeNotPresentException();
 		}
+		insuranceScheme.setInsuranceType(insuranceType.get().getInsuranceType());
 		List<InsuranceScheme> listOfInsuranceSchemes = getAllInsuranceScheme();
 		Optional<InsuranceScheme> schemes = listOfInsuranceSchemes.stream().filter(e -> e.getInsuranceScheme().equals(insuranceScheme.getInsuranceScheme())&& e.getInsuranceTypeId() == insuranceScheme.getInsuranceTypeId())
 				.findFirst();
@@ -61,5 +63,13 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 		InsuranceScheme saveScheme = insuranceSchemeRepository.save(insuranceScheme);
 		return saveScheme;
 	}
+
+	@Override
+	public List<InsuranceScheme> getActiveInsurenceSchemeList() {
+		List<InsuranceScheme> allInsuranceScheme = getAllInsuranceScheme();
+		List<InsuranceScheme> activeInsuranceSchemes = allInsuranceScheme.stream().filter(e->e.getStatus().equalsIgnoreCase("active")).collect(Collectors.toList());
+		return activeInsuranceSchemes;
+	}
+
 
 }

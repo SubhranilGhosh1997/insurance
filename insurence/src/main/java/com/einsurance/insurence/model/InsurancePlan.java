@@ -21,6 +21,7 @@ public class InsurancePlan {
 	
 	private long insuranceSchemeId;
 	
+	private long insuranceTypeId;
 	@NotBlank
 	private String insurancePlan;
 

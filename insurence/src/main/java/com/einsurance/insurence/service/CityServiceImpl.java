@@ -8,20 +8,32 @@ import org.springframework.stereotype.Service;
 
 import com.einsurance.insurence.exceptions.CityAlreadyExistException;
 import com.einsurance.insurence.exceptions.CityNotPresentException;
+import com.einsurance.insurence.exceptions.StateNotPresentException;
 import com.einsurance.insurence.model.City;
+import com.einsurance.insurence.model.State;
 import com.einsurance.insurence.repo.CityRepository;
 
 @Service
 public class CityServiceImpl implements CityService {
 	@Autowired
 	CityRepository cityRepository;
+	
+	@Autowired
+	StateService stateService;
 	@Override
-	public City addCity(City city) throws CityAlreadyExistException {
+	public City addCity(City city) throws CityAlreadyExistException, StateNotPresentException {
 		List<City> cities = getCities();
 		Optional<City> cityOptional = cities.stream().filter(e-> e.getCity().equals(city.getCity())).findAny();
+		List<State> states = stateService.getStates();
+		Optional<State> statesOptional = states.stream().filter(e-> e.getStateId()==(city.getStateId())).findAny();
+		if(!statesOptional.isPresent()) {
+			throw new StateNotPresentException();
+		}
 		if(cityOptional.isPresent()) {
 			throw new CityAlreadyExistException();
 		}
+		State state = statesOptional.get();
+		city.setState(state.getState());
 		return cityRepository.save(city);
 	}
 
