@@ -3,8 +3,10 @@ package com.einsurance.insurence.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.einsurance.insurence.exceptions.CityAlreadyExistException;
 import com.einsurance.insurence.exceptions.CityNotPresentException;
@@ -40,27 +44,30 @@ import com.einsurance.insurence.service.InsuranceSettingsService;
 import com.einsurance.insurence.service.InsuranceTypeService;
 import com.einsurance.insurence.service.StateService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
+	@Value("${project.image}")
+	private String path;
 	@Autowired
 	EmployeeService employeeService;
 
 	@Autowired
 	CityService cityService;
-	
+
 	@Autowired
 	StateService stateService;
-	
+
 	@Autowired
 	InsuranceSettingsService insuranceSettingsService;
-	
+
 	@Autowired
 	InsuranceTypeService insuranceTypeService;
 
 	@Autowired
 	InsurancePlanService insurancePlanService;
-	
+
 	@Autowired
 	InsuranceSchemeService insuranceSchemeService;
 
@@ -108,7 +115,26 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping("/updateStatestatus/{status}/{stateId}")
+	@GetMapping("/getActiveStates")
+	public ResponseEntity<?> getActiveStates() {
+		return new ResponseEntity<List<State>>(stateService.getActiveStates(), HttpStatus.OK);
+	}
+
+	@GetMapping("/getStates")
+	public ResponseEntity<?> getStates() {
+		return new ResponseEntity<List<State>>(stateService.getStates(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/getStatById/{stateId}")
+	public ResponseEntity<?> getStateById(@PathVariable long stateId) {
+		try {
+			return new ResponseEntity<State>(stateService.getStateById(stateId), HttpStatus.OK);
+		} catch (StateNotPresentException e) {
+			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping("/updateStatestatus/{status}/{stateId}")
 	public ResponseEntity<?> updateStatestatus(@PathVariable("status") String status,
 			@PathVariable("stateId") long stateId) {
 		try {
@@ -134,6 +160,14 @@ public class AdminController {
 			return new ResponseEntity<City>(cityService.addCity(city), HttpStatus.CREATED);
 		} catch (CityAlreadyExistException e) {
 			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	@GetMapping("/getCities")
+	public ResponseEntity<?> getCities() {
+		try {
+			return new ResponseEntity<List<City>>(cityService.getCities(), HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<Exception>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -179,12 +213,24 @@ public class AdminController {
 			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@PutMapping("/addInsuranceType/{insuranceTypeId}")
+	public ResponseEntity<?> addInsuranceTypeImage(@RequestParam MultipartFile file,
+			@PathVariable long insuranceTypeId) {
+		try {
+			return new ResponseEntity<String>(insuranceTypeService.addInsuranceTypeImage(insuranceTypeId, file, path),
+					HttpStatus.CREATED);
+		} catch (InsuranceTypeNotPresentException e) {
+			return new ResponseEntity<Exception>(e, HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@GetMapping("/getInsurenceTypeList")
 	public ResponseEntity<?> getAllInsuranceTypes() {
-			return new ResponseEntity<List<InsuranceType>>(insuranceTypeService.getAllInsuranceTypes(),
-					HttpStatus.OK);
-		
+		return new ResponseEntity<List<InsuranceType>>(insuranceTypeService.getAllInsuranceTypes(), HttpStatus.OK);
+
 	}
+
 	@PutMapping("/updateInsuranceType")
 	public ResponseEntity<?> updateInsuranceType(@RequestBody InsuranceType insuranceType) {
 		try {
@@ -194,7 +240,7 @@ public class AdminController {
 			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PostMapping("/addInsuranceScheme")
 	public ResponseEntity<?> addInsurancecheme(@RequestBody InsuranceScheme insuranceSchme) {
 		insuranceSchme.setInsuranceSchemeId(0);
@@ -209,13 +255,13 @@ public class AdminController {
 			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/getInsurenceSchemeList")
 	public ResponseEntity<?> getAllInsuranceScheme() {
-			return new ResponseEntity<List<InsuranceScheme>>(insuranceSchemeService.getAllInsuranceScheme(),
-					HttpStatus.OK);
-		
+		return new ResponseEntity<List<InsuranceScheme>>(insuranceSchemeService.getAllInsuranceScheme(), HttpStatus.OK);
+
 	}
+
 	@PutMapping("/updateInsuranceScheme")
 	public ResponseEntity<?> updateInsuranceScheme(@RequestBody InsuranceScheme insuranceSchme) {
 		try {
@@ -224,8 +270,8 @@ public class AdminController {
 		} catch (SchemeNotPresentException e) {
 			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
 		}
-	} 
-	
+	}
+
 	@PostMapping("/addInsurancePlan")
 	public ResponseEntity<?> addInsurancePlan(@RequestBody InsurancePlan insurancePlan) {
 		insurancePlan.setInsurancePlanId(0);
@@ -234,18 +280,19 @@ public class AdminController {
 				return new ResponseEntity<InsurancePlan>(insurancePlanService.addInsurancePlan(insurancePlan),
 						HttpStatus.CREATED);
 			} catch (SchemeNotPresentException e) {
-				return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);}
+				return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+			}
 		} catch (InsurancePlanalredyExistException e) {
 			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/getInsurencePlanList")
 	public ResponseEntity<?> getAllInsurancePlans() {
-			return new ResponseEntity<List<InsurancePlan>>(insurancePlanService.getAllInsurancePlan(),
-					HttpStatus.OK);
-		
+		return new ResponseEntity<List<InsurancePlan>>(insurancePlanService.getAllInsurancePlan(), HttpStatus.OK);
+
 	}
+
 	@PutMapping("/updateInsurancePlan")
 	public ResponseEntity<?> updateInsurancePlan(@RequestBody InsurancePlan insurancePlan) {
 		try {

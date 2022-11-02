@@ -2,6 +2,7 @@ package com.einsurance.insurence.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,13 @@ public class StateServiceImpl implements StateService {
 		State state = getStateById(stateId);
 		stateRepository.delete(state);
 		
+	}
+
+	@Override
+	public List<State> getActiveStates() {
+		List<State> states = getStates();
+		List<State> activeStates = states.stream().filter(e->e.getStatus().equalsIgnoreCase("active")).collect(Collectors.toList());
+		return activeStates;
 	}
 
 }

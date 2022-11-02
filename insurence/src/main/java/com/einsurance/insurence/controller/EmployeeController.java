@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ import com.einsurance.insurence.service.InsuranceSettingsService;
 import com.einsurance.insurence.service.InsuranceTypeService;
 import com.einsurance.insurence.service.StateService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -49,7 +51,7 @@ public class EmployeeController {
 
 	@Autowired
 	FeedbackService feedbackService;
-	
+
 	@Autowired
 	InsuranceSettingsService insuranceSettingsService;
 
@@ -77,22 +79,24 @@ public class EmployeeController {
 		agent.setAgentId(0);
 		return new ResponseEntity<Agent>(agentService.addAgent(agent), HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping("/getAgents")
 	public ResponseEntity<?> getAgents() {
 		return new ResponseEntity<List<Agent>>(agentService.getAgent(), HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/updateAgent")
 	public ResponseEntity<?> updateAgent(@RequestBody Agent agent) {
 		return new ResponseEntity<Agent>(agentService.addAgent(agent), HttpStatus.CREATED);
 	}
 
 	@PostMapping("/giveFeedBack/{feedbackId}/{reply}")
-	public ResponseEntity<?> giveFeedBackById(@PathVariable ("feedbackId") long feedbackId,@PathVariable ("reply") String reply){
+	public ResponseEntity<?> giveFeedBackById(@PathVariable("feedbackId") long feedbackId,
+			@PathVariable("reply") String reply) {
 		try {
 			return new ResponseEntity<Feedback>(feedbackService.giveFeedBackById(feedbackId, reply), HttpStatus.OK);
 		} catch (FeedbackNotFoundException e) {
-			return new ResponseEntity<Exception>(e,HttpStatus.BAD_REQUEST);		}
+			return new ResponseEntity<Exception>(e, HttpStatus.BAD_REQUEST);
+		}
 	}
 }
