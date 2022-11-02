@@ -124,8 +124,17 @@ public class AdminController {
 	public ResponseEntity<?> getStates() {
 		return new ResponseEntity<List<State>>(stateService.getStates(), HttpStatus.OK);
 	}
+	
+	@GetMapping("/getStatById/{stateId}")
+	public ResponseEntity<?> getStateById(@PathVariable long stateId) {
+		try {
+			return new ResponseEntity<State>(stateService.getStateById(stateId), HttpStatus.OK);
+		} catch (StateNotPresentException e) {
+			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+		}
+	}
 
-	@PostMapping("/updateStatestatus/{status}/{stateId}")
+	@GetMapping("/updateStatestatus/{status}/{stateId}")
 	public ResponseEntity<?> updateStatestatus(@PathVariable("status") String status,
 			@PathVariable("stateId") long stateId) {
 		try {
@@ -151,6 +160,14 @@ public class AdminController {
 			return new ResponseEntity<City>(cityService.addCity(city), HttpStatus.CREATED);
 		} catch (CityAlreadyExistException e) {
 			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	@GetMapping("/getCities")
+	public ResponseEntity<?> getCities() {
+		try {
+			return new ResponseEntity<List<City>>(cityService.getCities(), HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<Exception>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 
