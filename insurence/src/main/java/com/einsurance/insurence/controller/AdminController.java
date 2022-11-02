@@ -202,6 +202,12 @@ public class AdminController {
 		return new ResponseEntity<InsuranceSettings>(insuranceSettingsService.updateTax(insuranceSettings),
 				HttpStatus.CREATED);
 	}
+	
+	@GetMapping("/getInsuranceSetting")
+	public ResponseEntity<?> getInsuranceSetting() {
+		return new ResponseEntity<InsuranceSettings>(insuranceSettingsService.getSettingById(1), HttpStatus.OK);
+
+	}
 
 	@PostMapping("/addInsuranceType")
 	public ResponseEntity<?> addInsuranceType(@RequestBody InsuranceType insuranceType) {

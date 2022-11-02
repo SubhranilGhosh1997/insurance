@@ -43,5 +43,10 @@ public class InsuranceSettingsServiceImpl implements InsuranceSettingsService {
 		Optional<InsuranceSettings> insurenceSetting = insuranceSettingsReposiory.findById((long) 1);
 		return insurenceSetting;
 	}
+	@Override
+	public InsuranceSettings getSettingById(long i) {
+		Optional<InsuranceSettings> insurenceSetting = insuranceSettingsReposiory.findById(i);
+		return insurenceSetting.get();
+	}
 
 }
