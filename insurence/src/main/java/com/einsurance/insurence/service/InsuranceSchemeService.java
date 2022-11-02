@@ -6,6 +6,7 @@ import com.einsurance.insurence.exceptions.InsuranceSchemealredyExistException;
 import com.einsurance.insurence.exceptions.InsuranceTypeNotPresentException;
 import com.einsurance.insurence.exceptions.SchemeNotPresentException;
 import com.einsurance.insurence.model.InsuranceScheme;
+import com.einsurance.insurence.responseBody.SchemeWithTypeName;
 
 public interface InsuranceSchemeService {
 	InsuranceScheme addInsuranceScheme(InsuranceScheme insuranceScheme) throws InsuranceSchemealredyExistException, InsuranceTypeNotPresentException;

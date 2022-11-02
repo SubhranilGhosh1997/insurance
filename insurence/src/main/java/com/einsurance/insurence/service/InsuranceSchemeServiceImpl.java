@@ -29,6 +29,7 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 		if(!insuranceType.isPresent()) {
 			throw new InsuranceTypeNotPresentException();
 		}
+		insuranceScheme.setInsuranceType(insuranceType.get().getInsuranceType());
 		List<InsuranceScheme> listOfInsuranceSchemes = getAllInsuranceScheme();
 		Optional<InsuranceScheme> schemes = listOfInsuranceSchemes.stream().filter(e -> e.getInsuranceScheme().equals(insuranceScheme.getInsuranceScheme())&& e.getInsuranceTypeId() == insuranceScheme.getInsuranceTypeId())
 				.findFirst();
@@ -69,5 +70,6 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 		List<InsuranceScheme> activeInsuranceSchemes = allInsuranceScheme.stream().filter(e->e.getStatus().equalsIgnoreCase("active")).collect(Collectors.toList());
 		return activeInsuranceSchemes;
 	}
+
 
 }

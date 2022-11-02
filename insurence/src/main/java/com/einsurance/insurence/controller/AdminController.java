@@ -36,6 +36,7 @@ import com.einsurance.insurence.model.InsuranceScheme;
 import com.einsurance.insurence.model.InsuranceSettings;
 import com.einsurance.insurence.model.InsuranceType;
 import com.einsurance.insurence.model.State;
+import com.einsurance.insurence.responseBody.SchemeWithTypeName;
 import com.einsurance.insurence.service.CityService;
 import com.einsurance.insurence.service.EmployeeService;
 import com.einsurance.insurence.service.InsurancePlanService;
@@ -265,11 +266,6 @@ public class AdminController {
 	@GetMapping("/getInsurenceSchemeList")
 	public ResponseEntity<?> getAllInsuranceScheme() {
 		return new ResponseEntity<List<InsuranceScheme>>(insuranceSchemeService.getAllInsuranceScheme(), HttpStatus.OK);
-
-	}
-	@GetMapping("/getActiveInsurenceSchemeList")
-	public ResponseEntity<?> getActiveInsurenceSchemeList() {
-		return new ResponseEntity<List<InsuranceScheme>>(insuranceSchemeService.getActiveInsurenceSchemeList(), HttpStatus.OK);
 
 	}
 

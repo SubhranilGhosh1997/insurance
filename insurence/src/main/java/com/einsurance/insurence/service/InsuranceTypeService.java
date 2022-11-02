@@ -2,12 +2,14 @@ package com.einsurance.insurence.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.einsurance.insurence.exceptions.InsuranceAlreadyExistsException;
 import com.einsurance.insurence.exceptions.InsuranceTypeNotPresentException;
 import com.einsurance.insurence.model.InsuranceType;
 
+@Component
 public interface InsuranceTypeService {
 
 	InsuranceType addInsuranceType(InsuranceType insuranceType) throws InsuranceAlreadyExistsException;
