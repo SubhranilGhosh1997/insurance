@@ -4,10 +4,11 @@ import java.util.List;
 
 import com.einsurance.insurence.exceptions.CityAlreadyExistException;
 import com.einsurance.insurence.exceptions.CityNotPresentException;
+import com.einsurance.insurence.exceptions.StateNotPresentException;
 import com.einsurance.insurence.model.City;
 
 public interface CityService {
-	City addCity(City city) throws CityAlreadyExistException;
+	City addCity(City city) throws CityAlreadyExistException, StateNotPresentException;
 
 	City updateStatus(String status, long cityId) throws CityNotPresentException;
 

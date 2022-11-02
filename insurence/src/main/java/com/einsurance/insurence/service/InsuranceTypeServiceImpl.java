@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.einsurance.insurence.exceptions.InsuranceAlreadyExistsException;
 import com.einsurance.insurence.exceptions.InsuranceTypeNotPresentException;
 import com.einsurance.insurence.model.InsuranceType;
+import com.einsurance.insurence.model.State;
 import com.einsurance.insurence.repo.InsuranceTypeRepository;
 
 @Service
@@ -82,6 +84,13 @@ public class InsuranceTypeServiceImpl implements InsuranceTypeService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public List<InsuranceType> getActiveInsuranceTypes() {
+		 List<InsuranceType> allInsuranceTypes = getAllInsuranceTypes();
+		List<InsuranceType> activeInsuranceTypes = allInsuranceTypes.stream().filter(e->e.getStatus().equalsIgnoreCase("active")).collect(Collectors.toList());
+		return activeInsuranceTypes;
 	}
 
 }

@@ -25,3 +25,4 @@ public class InsuranceType {
 	@NotBlank
 	private String status;
 }
+	

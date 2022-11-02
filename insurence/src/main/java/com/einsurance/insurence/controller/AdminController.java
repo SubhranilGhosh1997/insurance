@@ -158,8 +158,8 @@ public class AdminController {
 	public ResponseEntity<?> addCity(@RequestBody City city) {
 		try {
 			return new ResponseEntity<City>(cityService.addCity(city), HttpStatus.CREATED);
-		} catch (CityAlreadyExistException e) {
-			return new ResponseEntity<String>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+		} catch (CityAlreadyExistException |StateNotPresentException e) {
+			return new ResponseEntity<Exception>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 	@GetMapping("/getCities")
@@ -171,7 +171,7 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping("/updateCitystatus/{status}/{cityId}")
+	@GetMapping("/updateCitystatus/{status}/{cityId}")
 	public ResponseEntity<?> updateCitytatus(@PathVariable("status") String status,
 			@PathVariable("cityId") long cityId) {
 		try {
@@ -230,6 +230,12 @@ public class AdminController {
 		return new ResponseEntity<List<InsuranceType>>(insuranceTypeService.getAllInsuranceTypes(), HttpStatus.OK);
 
 	}
+	
+	@GetMapping("/getActiveInsurenceTypeList")
+	public ResponseEntity<?> getActiveInsuranceTypes() {
+		return new ResponseEntity<List<InsuranceType>>(insuranceTypeService.getActiveInsuranceTypes(), HttpStatus.OK);
+
+	}
 
 	@PutMapping("/updateInsuranceType")
 	public ResponseEntity<?> updateInsuranceType(@RequestBody InsuranceType insuranceType) {
@@ -259,6 +265,11 @@ public class AdminController {
 	@GetMapping("/getInsurenceSchemeList")
 	public ResponseEntity<?> getAllInsuranceScheme() {
 		return new ResponseEntity<List<InsuranceScheme>>(insuranceSchemeService.getAllInsuranceScheme(), HttpStatus.OK);
+
+	}
+	@GetMapping("/getActiveInsurenceSchemeList")
+	public ResponseEntity<?> getActiveInsurenceSchemeList() {
+		return new ResponseEntity<List<InsuranceScheme>>(insuranceSchemeService.getActiveInsurenceSchemeList(), HttpStatus.OK);
 
 	}
 

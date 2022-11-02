@@ -16,6 +16,8 @@ public interface InsuranceTypeService {
 			throws InsuranceTypeNotPresentException;
 
 	List<InsuranceType> getAllInsuranceTypes();
+	
+	List<InsuranceType> getActiveInsuranceTypes();
 
 	InsuranceType updateInsuranceType(InsuranceType insuranceType) throws InsuranceTypeNotPresentException;
 

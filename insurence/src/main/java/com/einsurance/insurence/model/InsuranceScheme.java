@@ -19,7 +19,6 @@ public class InsuranceScheme {
 	private long insuranceTypeId;
 	@NotBlank
 	private String insuranceScheme;
-	private String image;
 	private double commissionForNewRegistration;
 	private double commissionForInstallmentPayment;
 	private String note;
