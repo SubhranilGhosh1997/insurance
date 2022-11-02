@@ -14,6 +14,8 @@ public interface StateService {
 	State getStateById(long stateId) throws StateNotPresentException;
 	
 	List<State> getStates();
+	
+	List<State> getActiveStates();
 
 	void deleteState(long stateId) throws StateNotPresentException;
 	

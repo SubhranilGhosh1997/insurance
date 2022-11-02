@@ -11,9 +11,14 @@ import com.einsurance.insurence.model.InsuranceType;
 public interface InsuranceTypeService {
 
 	InsuranceType addInsuranceType(InsuranceType insuranceType) throws InsuranceAlreadyExistsException;
-	String addInsuranceTypeImage(long insuranceTypeId, MultipartFile file, String path) throws InsuranceTypeNotPresentException;
+
+	String addInsuranceTypeImage(long insuranceTypeId, MultipartFile file, String path)
+			throws InsuranceTypeNotPresentException;
+
 	List<InsuranceType> getAllInsuranceTypes();
+
 	InsuranceType updateInsuranceType(InsuranceType insuranceType) throws InsuranceTypeNotPresentException;
+
 	InsuranceType getInsuranceTypeById(long insuranceTypeId) throws InsuranceTypeNotPresentException;
-	
+
 }
