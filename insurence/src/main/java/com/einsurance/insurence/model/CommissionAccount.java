@@ -25,7 +25,7 @@ public class CommissionAccount {
 
 	private long AgentId;
 	
-	private double balabce;
+	private double balance;
 
 
 	
